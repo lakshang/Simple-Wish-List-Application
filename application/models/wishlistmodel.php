@@ -42,8 +42,8 @@ class wishlistmodel extends CI_Model {
         }
     }
 
-    public function deleteItem($id) {
-        $this->db->where('id', $id);
+    public function deleteItem($data) {
+        $this->db->where('item_id', $data['item_id']);
         if ($this->db->delete($this->table)) {
             return TRUE;
         } else {
