@@ -68,14 +68,14 @@ class Api extends REST_Controller {
         }
     }
 
-    function deleteItem_delete() {
-        $id = $this->delete('id');
+    function deleteItem_post() {
+        $item_id = $this->post('item_id');
 
-        if (!$id) {
+        if (!$item_id) {
             $this->response("Parameter missing", 400);
         }
 
-        if ($this->wishlistmodel->deleteItem($id)) {
+        if ($this->wishlistmodel->deleteItem(array("item_id" => $item_id))) {
             $this->response("success", 200);
         } else {
             $this->response("failed", 404);
