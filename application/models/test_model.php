@@ -20,7 +20,7 @@ class test_model extends CI_Model {
         $this->db->from($this->table);
         $this->db->where('user_id', $user_id);
         $res = $this->db->order_by('priority', 'ASC')->get();
-        return $res->result_array();
+        return $res->result();
     }
 
     public function addItem($data) {
