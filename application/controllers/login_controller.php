@@ -53,7 +53,7 @@ class login_controller extends REST_Controller {
                 //setting a cookie
                 setcookie("user_id", $result_id, time() + (86400 * 30), "/");
                 setcookie("username", $username, time() + (86400 * 30), "/");
-                
+
                 $this->response("success", 200);
             }
         }
