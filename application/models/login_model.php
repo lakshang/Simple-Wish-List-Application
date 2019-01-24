@@ -35,12 +35,8 @@ class login_model extends CI_Model {
         $this->db->where('username', $username);
         $this->db->where('password', $password);
         $query = $this->db->get();
-        
+
         if ($query->num_rows() == 1) {
-//            $userid = $this->db->get()->row()->user_id;
-//            $username_ = $this->db->get()->row()->username;
-//            $this->session->set_userdata('username', $username_);
-//            $this->session->set_userdata('user_id', $userid);
             return TRUE;
         } else {
             return FALSE;
