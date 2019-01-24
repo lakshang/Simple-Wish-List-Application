@@ -49,6 +49,9 @@ class login_controller extends REST_Controller {
             if ($result === FALSE) {
                 $this->response("invalid credentails, Try again.", 404);
             } else {
+                $result_id = $this->login_model->user_id($username);
+                $this->session->set_userdata('user_id', $result_id);
+                $this->session->set_userdata('username', $username);
                 $this->response("success", 200);
             }
         }
