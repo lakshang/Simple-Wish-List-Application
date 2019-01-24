@@ -49,11 +49,10 @@
                 </tr>
                 <!--<td><button class="btn btn-primary register-user">Register</button></td>-->
                 <td><button class="btn btn-success login-user">Login</button></td>
-                <td><button class="btn btn-warning logout-user">Logout</button></td>
                 </tr>
             </table>
         </div>
-    <script>
+        <script>
             $(document).ready(function () {
 
                 $('.register-user').click(function (event) {
@@ -62,7 +61,7 @@
                     var password = $('.password-input').val();
                     var name = $('.name-input').val();
                     var descrip = $('.descrip-input').val();
-//                    console.log('Credentials' +name+" "+descrip);
+                    //                    console.log('Credentials' +name+" "+descrip);
                     $.ajax({
                         method: "POST",
                         url: "<?php echo base_url(); ?>index.php/login_controller/user",
@@ -70,8 +69,7 @@
                         data: {username: username, password: password, name: name, descrip: descrip},
 
                         success: function (data) {
-//                            console.log('Credentials' + username);
-
+                            alert('Registration Completed');
                             $('.username-input').val("");
                             $('.password-input').val("");
                             $('.name-input').val("");
@@ -86,14 +84,14 @@
                     event.preventDefault();
                     var username = $('.username-input-login').val();
                     var password = $('.password-input-login').val();
-//                    console.log('Credentials' +name+" "+descrip);
+                    //                    console.log('Credentials' +name+" "+descrip);
                     $.ajax({
                         method: "POST",
                         url: "<?php echo base_url(); ?>index.php/login_controller/userLogin",
                         dataType: 'JSON',
                         data: {username: username, password: password},
                         success: function (data) {
-//                            console.log('Credentials' + username + <?php echo $this->session->userdata('user_id'); ?>);
+
                             window.location.href = "<?php echo base_url(); ?>index.php/index_controller/wishlist";
                             $('.username-input-login').val("");
                             $('.password-input-login').val("");
@@ -101,7 +99,7 @@
                     });
                 });
             });
-        </script>-->
+        </script>
 
     </body>
 </html>
