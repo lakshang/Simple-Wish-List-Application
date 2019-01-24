@@ -19,9 +19,21 @@ class test_controller extends REST_Controller {
     }
 
     public function Item_get() {
-        $data = $this->test_model->allItems();
-        json_encode($data);
-        echo json_encode($data);
+        $id = $_COOKIE['user_id'];
+        if (!$id) {
+            $this->response("id not specified", 400);
+            exit;
+        }
+
+        $result = $this->test_model->allItems($id);
+
+        if ($result) {
+            $this->response($result, 200);
+            exit;
+        } else {
+            $this->response("Invalid Id", 404);
+            exit;
+        }
     }
 
     public function Item_post() {
@@ -29,11 +41,12 @@ class test_controller extends REST_Controller {
         $url = $this->post('url');
         $price = $this->post('price');
         $priority = $this->post('priority');
+        $user_id = $this->post('user_id');
 
-        if (!$title || !$url || !$price || !$priority) {
+        if (!$title || !$url || !$price || !$priority || !$user_id) {
             $this->response("Info Error", 400);
         } else {
-            $result = $this->test_model->addItem(array("title" => $title, "url" => $url, "price" => $price, "priority" => $priority));
+            $result = $this->test_model->addItem(array("title" => $title, "url" => $url, "price" => $price, "priority" => $priority, "user_id" => $user_id));
 
             if ($result === 0) {
                 $this->response("Item couldn't be added to list.", 400);

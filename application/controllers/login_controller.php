@@ -50,8 +50,10 @@ class login_controller extends REST_Controller {
                 $this->response("invalid credentails, Try again.", 404);
             } else {
                 $result_id = $this->login_model->user_id($username);
-                $this->session->set_userdata('user_id', $result_id);
-                $this->session->set_userdata('username', $username);
+                //setting a cookie
+                setcookie("user_id", $result_id, time() + (86400 * 30), "/");
+                setcookie("username", $username, time() + (86400 * 30), "/");
+                
                 $this->response("success", 200);
             }
         }
