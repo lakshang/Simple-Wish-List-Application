@@ -19,7 +19,6 @@ class login_model extends CI_Model {
     public function __construct() {
         parent::__construct();
         $this->load->database();
-   
     }
 
     function register($data) { //username and password are params
@@ -31,12 +30,17 @@ class login_model extends CI_Model {
     }
 
     function login($username, $password) {
-        $this->db->select('username,password');
+        $this->db->select('user_id,username,password');
         $this->db->from($this->table);
         $this->db->where('username', $username);
         $this->db->where('password', $password);
         $query = $this->db->get();
+        
         if ($query->num_rows() == 1) {
+//            $userid = $this->db->get()->row()->user_id;
+//            $username_ = $this->db->get()->row()->username;
+//            $this->session->set_userdata('username', $username_);
+//            $this->session->set_userdata('user_id', $userid);
             return TRUE;
         } else {
             return FALSE;

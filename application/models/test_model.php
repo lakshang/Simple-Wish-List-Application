@@ -15,12 +15,12 @@ class test_model extends CI_Model {
         $this->load->database();
     }
 
-    public function allItems() {
-        $this->db->select("*");
+    public function allItems($user_id) {
+        $this->db->select('*');
         $this->db->from($this->table);
-
-        $res = $this->db->get();
-        return $res->result();
+        $this->db->where('user_id', $user_id);
+        $res = $this->db->order_by('priority', 'ASC')->get();
+        return $res->result_array();
     }
 
     public function addItem($data) {
