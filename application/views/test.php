@@ -9,25 +9,10 @@
         <title>Wish List</title>
     </head>
     <body>
+        <br>
+        <button class="btn btn-danger logout-user">Logout</button>
         <div class="container">
-            <br><br>
-            <table>
-                <tr>
-                    <td>Username</td>
-                    <td><input type="text" class="form-control username-input" required=""></td>
-                </tr>
-                <tr>
-                    <td>Password</td>
-                    <td><input type="password" class="form-control password-input" required=""></td>
-                </tr>
-                <tr>
-                <br>
-                    <td><button class="btn btn-primary register-user">Register</button></td>
-                    <td><button class="btn btn-success login-user">Login</button></td>
-                </tr>
-            </table>
-        </div>
-        <div class="container" style="display:none">
+
             <table class="table">
                 <thead>
                     <tr>
@@ -41,7 +26,13 @@
                         <td><input class="form-control title-input"></td>
                         <td><input class="form-control url-input"></td>
                         <td><input class="form-control price-input"></td>
-                        <td><input class="form-control priority-input"></td>
+<!--                        <td><input class="form-control priority-input"></td>-->
+                        <td><select class="form-control priority-input">
+                                <option  value="1">1 - High</option>
+                                <option value="2">2 - Medium</option>
+                                <option value="3">3 -Low</option>
+                            </select></td>
+                        <td><input class="form-control user-id" value="<?php echo $_COOKIE['user_id']; ?> "></td>
                         <td><button class="btn btn-primary add-item">Add</button></td>
                     </tr>
                 </thead>
@@ -71,7 +62,8 @@
                     title: '',
                     url: '',
                     price: '',
-                    priority: ''
+                    priority: '',
+                    user_id: ''
                 }
             });
 // Backbone Collection
@@ -156,10 +148,12 @@
                         success: function (response) {
                             _.each(response.toJSON(), function (item) {
                                 console.log('Successfully Loaded the Items ');
+                                console.log(<?php echo $_COOKIE['user_id']; ?>);
                             });
                         },
                         error: function () {
                             console.log('Failed to get items!');
+                            console.log(<?php echo $_COOKIE['user_id']; ?>);
                         }
                     });
                 },
@@ -179,7 +173,8 @@
                         title: $('.title-input').val(),
                         url: $('.url-input').val(),
                         price: $('.price-input').val(),
-                        priority: $('.priority-input').val()
+                        priority: $('.priority-input').val(),
+                        user_id: $('.user-id').val()
                     });
                     $('.title-input').val('');
                     $('.url-input').val('');
@@ -198,20 +193,16 @@
                         }
                     });
                 });
-            });
-        </script>
-        <script>
+            }); //Add button
+
             $(document).ready(function () {
-                $(".login-user").click(function () {
-                    $(".container").show("fast");
+                $('.logout-user').click(function (event) {
+                    window.location.href = "<?php echo base_url(); ?>index.php/index_controller/index";
+<?php unset($_COOKIE['user_id']); ?>
+<?php unset($_COOKIE['username']); ?>
                 });
             });
-            
-            $(document).ready(function(event)){
-                
-            }
-            
-        </script>
 
+        </script>
     </body>
 </html>
