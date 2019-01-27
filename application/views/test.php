@@ -10,10 +10,32 @@
 
     </head>
     <body>
-        <br>
-        <button class="btn btn-danger logout-user">Logout</button>
+        <?php
+        if (!isset($_COOKIE['user_id'])) {
+            redirect('/index.php/index_controller/index', 'refresh');
+        }
+        ?>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item logout-user">
+                        <a class="nav-link" href="#">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!--        <button class="btn btn-danger logout-user">Logout</button>-->
         <div class="container">
-            <h3><?php echo $_COOKIE["username"]; ?>'s Wishlist</h3>
+            <h3><?php
+                if ($this->session->userdata('userlist_title') !== '') {
+                    echo $this->session->userdata('userlist_title');
+                }
+                ?> Wishlist</h3>
+            <h6><?php
+                if ($this->session->userdata('userlist_descrip') !== '') {
+                    echo $this->session->userdata('userlist_descrip');
+                }
+                ?></h6>
             <table class="table">
                 <thead>
                     <tr>
@@ -71,7 +93,7 @@
 // Backbone Collection
 
             var Items = Backbone.Collection.extend({
-                url: 'http://localhost/wish_list_application/index.php/test_controller/Item'
+                url: 'http://localhost/wish_list_application/list_controller/Item'
             });
 // instantiate a Collection
 
@@ -176,6 +198,7 @@
                 }
             });
             var itemsView = new ItemsView();
+
             $(document).ready(function () {
                 $('.add-item').on('click', function () {
                     if ($('.title-input').val() === "" || $('.url-input').val() === "" || $('.price-input').val() === "") {
@@ -199,6 +222,7 @@
                                     console.log('Successfully Added an Item');
 //                                $('.container').load(location.href + ' .container');
                                 });
+                                console.log('Successfully Added an Item');
                             },
                             error: function () {
                                 console.log('Failed to get items!');
@@ -210,15 +234,13 @@
 
             $(document).ready(function () {
                 $('.logout-user').click(function (event) {
-                    window.location.href = "<?php echo base_url(); ?>index.php/index_controller/index";
-<?php unset($_COOKIE['user_id']); ?>
-<?php unset($_COOKIE['username']); ?>
+                    window.location.href = "<?php echo base_url(); ?>index_controller/logout";
                 });
             });
 
             $(document).ready(function () {
                 $('.share-list').click(function (event) {
-                    window.location.href = "<?php echo base_url(); ?>index.php/index_controller/sharelist";
+                    window.location.href = "<?php echo base_url(); ?>index_controller/sharelist";
                 });
             });
 

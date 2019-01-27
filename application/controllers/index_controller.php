@@ -30,7 +30,7 @@ class index_controller extends CI_Controller {
     public function logout() {
         setcookie('user_id', null, -1, '/');
         setcookie('username', null, -1, '/');
-        $this->load->view('login');
+        redirect(base_url());
     }
 
 }

@@ -49,4 +49,11 @@ class test_model extends CI_Model {
         }
     }
 
+    public function nextId() {
+        $query = $this->db->query("SELECT `auto_increment` FROM INFORMATION_SCHEMA.TABLES
+WHERE TABLE_NAME = 'list'");
+        $result = $query->result_array();
+        return $result;
+    }
+
 }

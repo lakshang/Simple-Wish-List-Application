@@ -27,12 +27,13 @@ class list_controller extends REST_Controller {
 
         $result = $this->test_model->allItems($id);
 //        $nextId = $this->test_model->nextId();
+        $data = $this->login_model->user_details($_COOKIE['username']);
 
         if ($result) {
-//            $id__ = $nextId[0];
-//            echo ($id__['auto_increment']);
-            $this->response($result, 200);
+            $this->session->set_userdata('userlist_title', $data[0]['name']);
+            $this->session->set_userdata('userlist_descrip', $data[0]['description']);
 
+            $this->response($result, 200);
             exit;
         } else {
             $this->response("Invalid Id", 404);

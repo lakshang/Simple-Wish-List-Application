@@ -10,6 +10,11 @@
 
         </head>
         <body>
+            <?php
+            if (!isset($_COOKIE['user_id'])) {
+                redirect('/index_controller/index', 'refresh');
+            }
+            ?>
             <table class="table">
                 <thead>
                     <tr>

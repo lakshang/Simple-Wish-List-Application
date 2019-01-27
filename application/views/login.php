@@ -61,21 +61,28 @@
                     var password = $('.password-input').val();
                     var name = $('.name-input').val();
                     var descrip = $('.descrip-input').val();
-                    //                    console.log('Credentials' +name+" "+descrip);
-                    $.ajax({
-                        method: "POST",
-                        url: "<?php echo base_url(); ?>index.php/login_controller/user",
-                        dataType: 'JSON',
-                        data: {username: username, password: password, name: name, descrip: descrip},
+                    if ($('.username-input').val() === "" || $('.password-input').val() === "" || $('.name-input').val() === "" || $('.descrip-input').val() === "") {
+                        alert('Please complete the registration form');
+                    } else {
+                        $.ajax({
+                            method: "POST",
+                            url: "<?php echo base_url(); ?>login_controller/user",
+                            dataType: 'JSON',
+                            data: {username: username, password: password, name: name, descrip: descrip},
 
-                        success: function (data) {
-                            alert('Registration Completed');
-                            $('.username-input').val("");
-                            $('.password-input').val("");
-                            $('.name-input').val("");
-                            $('.descrip-input').val("");
-                        }
-                    });
+                            success: function (data) {
+                                alert('Registration Completed');
+                                $('.username-input').val("");
+                                $('.password-input').val("");
+                                $('.name-input').val("");
+                                $('.descrip-input').val("");
+                            },
+                            error: function () {
+                                alert('Username exists. Please select a different username');
+                            }
+                        });
+                    }
+
                 });
             });
 
@@ -87,14 +94,17 @@
                     //                    console.log('Credentials' +name+" "+descrip);
                     $.ajax({
                         method: "POST",
-                        url: "<?php echo base_url(); ?>index.php/login_controller/userLogin",
+                        url: "<?php echo base_url(); ?>login_controller/userLogin",
                         dataType: 'JSON',
                         data: {username: username, password: password},
                         success: function (data) {
 
-                            window.location.href = "<?php echo base_url(); ?>index.php/index_controller/wishlist";
+                            window.location.href = "<?php echo base_url(); ?>index_controller/wishlist";
                             $('.username-input-login').val("");
                             $('.password-input-login').val("");
+                        },
+                        error: function () {
+                            alert('Invalid Credentials!');
                         }
                     });
                 });

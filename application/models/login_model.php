@@ -51,6 +51,15 @@ class login_model extends CI_Model {
         return $res;
     }
 
+    function user_details($username) {
+        $this->db->select('name,description');
+        $this->db->from($this->table);
+        $this->db->where('username', $username);
+        $query = $this->db->get();
+        $result = $query->result_array();
+        return $result;
+    }
+
     function create_wishlist($data) {
         if ($this->db->insert($this->table_list, $data)) {
             return TRUE;
