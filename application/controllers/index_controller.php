@@ -24,7 +24,13 @@ class index_controller extends CI_Controller {
     public function sharelist() {
         $id = $_COOKIE['user_id'];
         $result['data'] = $this->test_model->allItems($id);
-        $this->load->view('sharelist',$result);
+        $this->load->view('sharelist', $result);
+    }
+
+    public function logout() {
+        setcookie('user_id', null, -1, '/');
+        setcookie('username', null, -1, '/');
+        $this->load->view('login');
     }
 
 }
