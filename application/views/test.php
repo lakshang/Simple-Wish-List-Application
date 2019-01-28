@@ -79,9 +79,6 @@
 
         <script>
 // Backbone Model
-//            Backbone.Model.prototype.idAttribute = 'item_id';
-
-
             var Item = Backbone.Model.extend({
                 defaults: {
                     title: '',
@@ -92,15 +89,12 @@
                 }
             });
 // Backbone Collection
-
             var Items = Backbone.Collection.extend({
                 url: 'http://localhost/wish_list_application/list_controller/Item'
             });
 // instantiate a Collection
-
             var items = new Items();
-// Backbone View for one blog
-
+// Backbone View for one item
             var ItemView = Backbone.View.extend({
                 model: new Item(),
                 tagName: 'tr',
@@ -132,7 +126,8 @@
                     if ($('.priority-update').val() === "1" || $('.priority-update').val() === "2" || $('.priority-update').val() === "3") {
                         this.model.save(null, {
                             success: function (response) {
-                                console.log('Successfully UPDATED item with id:' + response.toJSON().item_id);
+                                items.fetch();
+                                console.log('Successfully UPDATED');
                                 alert('Update Successful');
                             },
                             error: function () {
@@ -188,6 +183,7 @@
                             console.log(<?php echo $_COOKIE['user_id']; ?>);
                         }
                     });
+
                 },
                 render: function () {
                     var self = this;
@@ -205,6 +201,7 @@
                     if ($('.title-input').val() === "" || $('.url-input').val() === "" || $('.price-input').val() === "") {
                         alert('Please enter all value');
                     } else {
+                        console.log('get values');
                         var item = new Item({
                             title: $('.title-input').val(),
                             url: $('.url-input').val(),
@@ -218,7 +215,8 @@
                         $('.priority-input').val('');
                         items.add(item);
                         item.save(null, {
-                            success: function (model, response) {
+                            success: function (response) {
+                                items.fetch();
                                 console.log('Item Added Successfully');
                             },
                             error: function (model, error) {
