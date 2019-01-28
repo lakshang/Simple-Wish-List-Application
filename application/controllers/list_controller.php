@@ -90,4 +90,10 @@ class list_controller extends REST_Controller {
         }
     }
 
+    public function Share_get() {
+        $id = $this->get('id');
+        $result['data'] = $this->test_model->allItems($id);
+        $this->load->view('sharelist', $result);
+    }
+
 }
