@@ -220,10 +220,9 @@
                         item.save(null, {
                             success: function (model, response) {
                                 console.log('Item Added Successfully');
-                               
                             },
                             error: function (model, error) {
-                                console.log('Failed to get items!');
+                                console.log('Failed to add Item!');
                                 console.log(model.toJSON());
                             }
                         });
