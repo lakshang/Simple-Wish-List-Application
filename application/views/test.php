@@ -48,26 +48,27 @@
                     <tr>
                         <td><input class="form-control title-input"></td>
                         <td><input class="form-control url-input"></td>
-                        <td><input class="form-control price-input"></td>
+                        <td><input class="form-control price-input" type="number"></td>
 <!--                        <td><input class="form-control priority-input"></td>-->
                         <td><select class="form-control priority-input">
                                 <option  value="1">1 - High</option>
                                 <option value="2">2 - Medium</option>
                                 <option value="3">3 -Low</option>
                             </select></td>
-                        <td><input class="form-control user-id" value="<?php echo $_COOKIE['user_id']; ?> " disabled=""></td>
+                        <td><input class="form-control user-id" value="<?php echo $_COOKIE['user_id']; ?> " disabled="" ></td>
                         <td><button class="btn btn-primary add-item">Add</button></td>
-                        <td><button class="btn btn-info share-list">Share</button></td>
                     </tr>
                 </thead>
                 <tbody class="items-list"></tbody>
             </table>
+            <input type="button" value="Get the Share Link" class="btn btn-primary share-item" />
+            <p id="share_url"></p>
         </div>
 
         <script type="text/template" class="items-list-template">
             <td><span class="title"><%= title %></span></td>
             <td><span class="url"><a href="<%= url %>"><%= url %></a></span></td>
-            <td><span class="price"><%= price %></span></td>
+            <td><span class="price">$<%= price %></span></td>
             <td><span class="priority"><%= priority %></span></td>
             <td><button class="btn btn-warning edit-item">Edit</button>
             <button class="btn btn-danger delete-item">Delete</button>
@@ -149,7 +150,7 @@
                 delete: function () {
                     this.model.destroy({
                         success: function (response) {
-                            console.log('Successfully DELTED item with id:');
+                            console.log('Successfully DELTED item with id:' + response.toJSON().id);
                             alert('Item Delete Successful');
                         },
                         error: function () {
@@ -178,7 +179,7 @@
                     this.model.fetch({
                         success: function (response) {
                             _.each(response.toJSON(), function (item) {
-                                console.log('Successfully Loaded the Items ');
+                                console.log('Successfully Loaded the Items ' + item.id);
                                 console.log(<?php echo $_COOKIE['user_id']; ?>);
                             });
                         },
@@ -216,16 +217,14 @@
                         $('.price-input').val('');
                         $('.priority-input').val('');
                         items.add(item);
-                        item.save({
-                            success: function (response) {
-                                _.each(response.toJSON(), function (item) {
-                                    console.log('Successfully Added an Item');
-//                                $('.container').load(location.href + ' .container');
-                                });
-                                console.log('Successfully Added an Item');
+                        item.save(null, {
+                            success: function (model, response) {
+                                console.log('Item Added Successfully');
+                               
                             },
-                            error: function () {
+                            error: function (model, error) {
                                 console.log('Failed to get items!');
+                                console.log(model.toJSON());
                             }
                         });
                     }
@@ -239,11 +238,11 @@
             });
 
             $(document).ready(function () {
-                $('.share-list').click(function (event) {
-                    window.location.href = "<?php echo base_url(); ?>index_controller/sharelist";
+                $('.share-item').click(function (event) {
+                    var user_id = <?php echo $_COOKIE['user_id'] ?>;
+                    $('#share_url').html("Your share link: <?php echo base_url() ?>list_controller/Share?id=" + user_id);
                 });
             });
-
         </script>
     </body>
 </html>
