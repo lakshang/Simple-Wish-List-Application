@@ -56,4 +56,13 @@ WHERE TABLE_NAME = 'list'");
         return $result;
     }
 
+    public function addItemToWishlist($item) {
+        if ($this->db->insert($this->table, $item)) {
+            $insert_id = $this->db->insert_id();
+            return $insert_id;
+        } else {
+            return 0;
+        }
+    }
+
 }
